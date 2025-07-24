@@ -28,6 +28,11 @@
 //! }
 //! ```
 
+#[cfg(feature = "serde")]
+extern crate serde;
+#[cfg(feature = "serde")]
+use serde::{Deserialize, Serialize};
+
 #[cfg(any(
     target_os = "android",
     target_os = "linux",
@@ -41,7 +46,7 @@ extern crate libc;
 extern crate num_cpus;
 
 /// This function tries to retrieve information
-/// on all the "cores" on which the current thread 
+/// on all the "cores" on which the current thread
 /// is allowed to run.
 pub fn get_core_ids() -> Option<Vec<CoreId>> {
     get_core_ids_helper()
@@ -60,6 +65,7 @@ pub fn set_for_current(core_id: CoreId) -> bool {
 /// This represents a CPU core.
 #[repr(transparent)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct CoreId {
     pub id: usize,
 }

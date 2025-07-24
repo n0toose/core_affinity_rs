@@ -13,6 +13,11 @@ categories = ["os"]
 
 [dependencies]
 num_cpus = "^1.14.0"
+serde = { version = "1.0", optional = true, features = ["derive"] }
+
+[features]
+default = []
+serde = ["dep:serde"]
 
 [target.'cfg(any(target_os = "android", target_os = "linux", target_os = "macos", target_os = "freebsd", target_os = "netbsd"))'.dependencies]
 libc = "^0.2.30"
